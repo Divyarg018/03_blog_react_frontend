@@ -2,7 +2,7 @@ import { Box, Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function Auth() {
+function Auth(props) {
     const [inputs, setInputs] = useState({
         name: "", email: "", password: ""
     })
@@ -17,30 +17,36 @@ function Auth() {
     };
 
     async function sendRequest(type) {
-        const res = await axios.post(`http://localhost:5000/api/user/${type}`, {
-            name: inputs.name,
-            email: inputs.email,
-            password: inputs.password
-        }).catch(err => console.log(err))
-        // console.log(res);
-        let data = await res.data;
-        // console.log(data);
-        return data;
-    }
+    const res = await axios.post(`http://localhost:5000/api/user/${type}`, {
+      name: inputs.name,
+      email: inputs.email,
+      password: inputs.password
+    }).catch(err => {
+      if (err.response.request.status === 404) {
+        alert("User does not exist");
+        props.setIsLoggedIn(false);
+      } else if (err.response.request.status === 400) {
+        alert("Invalid password");
+        props.setIsLoggedIn(false);
+      }
+    })
+    let data = await res.data;
+    return data;
+  }
 
     function handleSubmit(e) {
         e.preventDefault();
-        // console.log(inputs);
+        console.log(inputs);
         if (isSignup) {
-            sendRequest("signup").then(data => console.log(data))
+            sendRequest("signup").then(data => console.log(data)).catch(err=>"Error in signup")
         } else {
-            sendRequest("login").then(data => console.log(data))
+            sendRequest("login").then(data => console.log(data)).catch(err=>"Error in login")
         }
     }
 
     return (
         <div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <Box
                     maxWidth={400}
                     display="flex"
@@ -57,7 +63,7 @@ function Auth() {
                     {isSignup && <TextField name='name' onChange={handleChange} value={inputs.name} type='name' placeholder='Name' margin='normal' />}{" "}
                     <TextField name='email' onChange={handleChange} value={inputs.email} type='email' placeholder='Email' margin='normal' />
                     <TextField name='password' onChange={handleChange} value={inputs.password} type='password' placeholder='Password' margin='normal' />
-                    <Button variant='contained' sx={{ borderRadius: 3, marginTop: 3 }} color='warning'>Submit</Button>
+                    <Button type='submit' variant='contained' sx={{ borderRadius: 3, marginTop: 3 }} color='warning'>Submit</Button>
                     <Button onClick={() => setIsSignup(!isSignup)} sx={{ borderRadius: 3, marginTop: 3 }} >Change to {isSignup ? "Login" : "Sign up"}</Button>
                 </Box>
             </form>
