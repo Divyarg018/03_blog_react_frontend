@@ -28,6 +28,16 @@ function Auth() {
         return data;
     }
 
+    function handleSubmit(e) {
+        e.preventDefault();
+        // console.log(inputs);
+        if (isSignup) {
+            sendRequest("signup").then(data => console.log(data))
+        } else {
+            sendRequest("login").then(data => console.log(data))
+        }
+    }
+
     return (
         <div>
             <form>
