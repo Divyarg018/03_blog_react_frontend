@@ -1,12 +1,30 @@
 import './App.css';
 import Header from './components/Header';
 import React from 'react';
+import Auth from "./components/Auth";
+import Blogs from "./components/Blogs";
+import AddBlog from "./components/AddBlog";
+import UserBlogs from './components/UserBlogs';
+import BlogDetail from "./components/BlogDetail";
+
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div >
-      <Header />
-    </div>
+    <React.Fragment >
+      <header>
+        <Header />
+      </header>
+      <main>
+        <Routes>
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/add" element={<AddBlog />} />
+          <Route path="/myBlogs" element={<UserBlogs />} />
+          <Route path="/myBlogs/:id" element={<BlogDetail />} />
+        </Routes>
+      </main>
+    </React.Fragment>
   );
 }
 
