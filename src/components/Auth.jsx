@@ -1,9 +1,9 @@
-import React from 'react'
+import { Box, Button, TextField, Typography } from '@mui/material'
+import React, { useState } from 'react'
 
-function Auth() {
-    return (
-        <div>Auth</div>
-    )
+const Auth = () => {
+    const [inputs, setInputs] = useState({
+        name: "", email: "", password: ""
+    })
+    const [isSignup, setIsSignup] = useState(false);
 }
-
-export default Auth;
