@@ -1,8 +1,10 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Auth(props) {
+    const navigate = useNavigate();
     const [inputs, setInputs] = useState({
         name: "", email: "", password: ""
     })
@@ -17,30 +19,35 @@ function Auth(props) {
     };
 
     async function sendRequest(type) {
-    const res = await axios.post(`http://localhost:5000/api/user/${type}`, {
-      name: inputs.name,
-      email: inputs.email,
-      password: inputs.password
-    }).catch(err => {
-      if (err.response.request.status === 404) {
-        alert("User does not exist");
-        props.setIsLoggedIn(false);
-      } else if (err.response.request.status === 400) {
-        alert("Invalid password");
-        props.setIsLoggedIn(false);
-      }
-    })
-    let data = await res.data;
-    return data;
-  }
+        const res = await axios.post(`http://localhost:5000/api/user/${type}`, {
+            name: inputs.name,
+            email: inputs.email,
+            password: inputs.password
+        }).catch(err => {
+            if (err.response.request.status === 404) {
+                alert("User does not exist");
+                props.setIsLoggedIn(false);
+            } else if (err.response.request.status === 400) {
+                alert("Invalid password");
+                props.setIsLoggedIn(false);
+            }
+        })
+        let data = await res.data;
+        return data;
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
         console.log(inputs);
         if (isSignup) {
-            sendRequest("signup").then(data => console.log(data)).catch(err=>"Error in signup")
+            sendRequest("signup").then(data => navigate("/auth")).catch(err => "Error in signup")
         } else {
-            sendRequest("login").then(data => console.log(data)).catch(err=>"Error in login")
+            sendRequest("login")
+                .then(data => {
+                    props.setIsLoggedIn(true)
+                    navigate("/blogs")
+                })
+                .catch(err => "Error in login")
         }
     }
 
