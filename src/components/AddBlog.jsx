@@ -24,6 +24,11 @@ function AddBlog() {
         const data = await res.data;
         return data;
     }
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log(inputs);
+        sendRequest().then(data => console.log(data))
+    }
     return (
         <div>AddBlog</div>
     )
