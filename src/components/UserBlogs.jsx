@@ -19,7 +19,15 @@ function UserBlogs() {
     }, [])
     console.log(blogs);
     return (
-        <div>UserBlogs</div>
+        <>
+            {blogs && blogs.map((blog, index) => (
+                <Blog
+                    user={blog.user.name}
+                    description={blog.description}
+                    imageURL={blog.image}
+                    title={blog.title} />
+            ))}
+        </>
     )
 }
 
