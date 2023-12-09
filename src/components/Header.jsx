@@ -9,7 +9,7 @@ function Header(props) {
             <Toolbar>
                 <Typography variant="h4">Blog App</Typography>
                 {props.isLoggedIn && <Box display='flex' marginLeft={'auto'} marginRight={'auto'}>
-                    <Tabs textColor="inherite" value={value} onChange={(e, val) => setValue(val)}>
+                    <Tabs textColor="inherit" value={value} onChange={(e, val) => setValue(val)}>
                         <Tab LinkComponent={Link} to="/blogs" label="All Blogs" />
                         <Tab LinkComponent={Link} to="/myBlogs" label="My Blogs" />
                     </Tabs>

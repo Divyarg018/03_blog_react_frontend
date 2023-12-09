@@ -1,4 +1,6 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import Blog from './Blog.jsx';
 
 function Blogs() {
     const [blogs, setBlogs] = useState();
@@ -16,7 +18,9 @@ function Blogs() {
     }, []);
     console.log(blogs);
     return (
-        <div>Blogs</div>
+        <div>
+            <Blog />
+        </div>
     )
 }
 
