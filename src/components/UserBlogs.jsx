@@ -3,7 +3,7 @@ import axios from 'axios';
 import Blog from './Blog';
 
 function UserBlogs() {
-    const [blogs, setBlogs] = useState();
+    const [user, setUser] = useState();
     const id = localStorage.getItem("userID");
 
     async function sendRequest() {
@@ -14,14 +14,16 @@ function UserBlogs() {
     }
     useEffect(() => {
         sendRequest()
-            .then((data) => setBlogs(data.user.blogs))
+            .then((data) => setUser(data.user.blogs))
     }, [])
-    console.log(blogs);
+    console.log(user);
     return (
         <>
-            {blogs && blogs.map((blog, index) => (
-                <Blog
-                    user={blog.user.name}
+            {" "}
+            {user && user.blogs && user.blogs.map((blog, index) => (
+                <Blog key={index}
+                    isUser={true}
+                    user={user.name}
                     description={blog.description}
                     imageURL={blog.image}
                     title={blog.title} />
