@@ -13,6 +13,11 @@ function UserBlogs() {
         const data = await res.data;
         return data;
     }
+    useEffect(() => {
+        sendRequest()
+            .then((data) => setBlogs(data.user.blogs))
+    }, [])
+    console.log(blogs);
     return (
         <div>UserBlogs</div>
     )
