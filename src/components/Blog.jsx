@@ -6,8 +6,10 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
+import { useStyles } from './utils';
 
 function Blog(props) {
+    const classes = useStyles();
     console.log(props.title, props.isUser);
     const navigate = useNavigate();
 
@@ -22,7 +24,7 @@ function Blog(props) {
         return data;
     }
     function handleDelete() {
-        deleteRequest().then(data => console.log(data))
+        deleteRequest().then(() => navigate("/")).then(() => navigate("/blogs"))
     }
     return (
         <Card sx={{
@@ -34,13 +36,13 @@ function Blog(props) {
 
             {props.isUser && (
                 <Box display='flex'>
-                    <IconButton onClick={handleEdit} sx={{ marginLeft: 'auto' }}><EditIcon /></IconButton>
-                    <IconButton onClick={handleDelete}><DeleteForeverIcon /></IconButton>
+                    <IconButton onClick={handleEdit} sx={{ marginLeft: 'auto' }}><EditIcon color='warning' /></IconButton>
+                    <IconButton onClick={handleDelete}><DeleteForeverIcon color='warning' /></IconButton>
                 </Box>
             )}
             <CardHeader
                 avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                    <Avatar className={classes.font} sx={{ bgcolor: red[500] }} aria-label="recipe">
                         {props.user ? props.user.charAt(0) : ""}
                     </Avatar>
                 }
@@ -59,7 +61,7 @@ function Blog(props) {
                 alt="Paella dish"
             />
             <CardContent>
-                <Typography variant="body2" color="text.secondary">
+                <Typography className={classes.font} variant="body2" color="text.secondary">
                     <b>{props.user}</b>{":"}
                     {props.description}
                 </Typography>
