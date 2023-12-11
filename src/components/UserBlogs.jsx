@@ -23,6 +23,7 @@ function UserBlogs() {
             {user && user.blogs && user.blogs.map((blog, index) => (
                 <Blog key={index}
                     isUser={true}
+                    id={blog._id}
                     user={user.name}
                     description={blog.description}
                     imageURL={blog.image}
