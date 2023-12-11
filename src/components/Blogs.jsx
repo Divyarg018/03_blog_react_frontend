@@ -19,7 +19,7 @@ function Blogs() {
     console.log(blogs);
     return (
         <div>
-            {(blogs.length != 0) && blogs.map((blog, index) =>
+            {(blogs.length !== 0) && blogs.map((blog, index) =>
                 <Blog
                     id={blog._id}
                     isUser={localStorage.getItem("userID") === blog.user._id}
