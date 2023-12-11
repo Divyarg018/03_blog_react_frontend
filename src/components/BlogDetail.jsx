@@ -33,6 +33,25 @@ function BlogDetail(props) {
         })
 
     }, [id]);
+    
+    async function sendRequest() {
+        const res = await axios.put(`http://localhost:5000/api/blog/update/${id}`, {
+            title: inputs.title,
+            description: inputs.description
+        }).catch(err => console.log(err))
+
+        const data = await res.data;
+        return data;
+    }
+    console.log(blog);
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log(inputs);
+        sendRequest()
+            .then(data => console.log(data))
+            .then(() => navigate("/myBlogs"))
+    }
     return (
         <div>BlogDetail</div>
     )
